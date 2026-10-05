@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <!-- Load scripts with defer attribute for better performance -->
+    <script src="./JS/numbers.js" defer></script>
+    <script src="./JS/operations.js" defer></script>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Bernalyn's Calculator</h1>
+        
+        <form name="calculator" class="calculator">
+            <div class="display-container">
+                <input type="text" id="display" value="0" readonly class="primary-display">
+                <input type="text" id="display2" readonly disabled style="display:none;">
+                <input type="text" id="operator" readonly class="operator-display">
+            </div>
+            
+            <div class="keypad">
+                <!-- Row 1 -->
+                <button type="button" onclick="seven()" class="number-key">7</button>
+                <button type="button" onclick="eight()" class="number-key">8</button>
+                <button type="button" onclick="nine()" class="number-key">9</button>
+                <button type="button" onclick="plus()" class="operation-key">+</button>
+                
+                <!-- Row 2 -->
+                <button type="button" onclick="four()" class="number-key">4</button>
+                <button type="button" onclick="five()" class="number-key">5</button>
+                <button type="button" onclick="six()" class="number-key">6</button>
+                <button type="button" onclick="minus()" class="operation-key">-</button>
+                
+                <!-- Row 3 -->
+                <button type="button" onclick="one()" class="number-key">1</button>
+                <button type="button" onclick="two()" class="number-key">2</button>
+                <button type="button" onclick="three()" class="number-key">3</button>
+                <button type="button" onclick="times()" class="operation-key">*</button>
+                
+                <!-- Row 4 -->
+                <button type="button" onclick="zero()" class="number-key">0</button>
+                <button type="button" onclick="decimal()" class="number-key">.</button>
+                <button type="button" onclick="equals()" class="equals-key">=</button>
+                <button type="button" onclick="divide()" class="operation-key">/</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

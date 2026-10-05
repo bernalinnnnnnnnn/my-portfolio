@@ -1,0 +1,162 @@
+/* Base styles and reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #1c1c1c;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    text-align: center;
+    background-image: url(./images/kuromi2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 15px;
+}
+
+.container {
+    background-color: rgba(46, 27, 43, 0.6);
+    padding: clamp(15px, 5vw, 25px);
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(237, 127, 236, 0.7);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 15px auto;
+}
+
+input {
+    width: 100%;
+    padding: clamp(8px, 2.5vw, 10px);
+    margin: 10px 0;
+    border: 2px solid #e65df5;
+    border-radius: 10px;
+    text-align: center;
+    font-size: clamp(16px, 4vw, 18px);
+    background: #1c1c1c;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: clamp(8px, 2.5vw, 10px);
+    margin: 5px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: clamp(14px, 3.5vw, 16px);
+    cursor: pointer;
+    background: #c151dd;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    touch-action: manipulation;
+}
+
+button:hover {
+    background: #9d1696;
+    transform: scale(1.05);
+}
+
+#display {
+    margin-top: 15px;
+    font-size: clamp(16px, 4vw, 18px);
+    font-weight: bold;
+    color: #cc81e0;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+/* Media Queries */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    input {
+        padding: 8px;
+        font-size: 16px;
+        margin: 8px 0;
+    }
+    
+    button {
+        padding: 8px;
+        font-size: 14px;
+        margin: 4px 0;
+    }
+    
+    #display {
+        margin-top: 12px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    input {
+        padding: 6px;
+        margin: 6px 0;
+    }
+    
+    button {
+        padding: 6px;
+        margin: 3px 0;
+    }
+}
+
+/* For high-density displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .container {
+        box-shadow: 0 0 20px rgba(237, 127, 236, 0.6);
+    }
+}
+
+/* For very small screens */
+@media screen and (max-width: 320px) {
+    .container {
+        padding: 12px;
+        border-radius: 12px;
+    }
+    
+    input {
+        padding: 6px;
+        font-size: 14px;
+        border-width: 1px;
+    }
+    
+    button {
+        padding: 6px;
+        font-size: 13px;
+        margin: 3px 0;
+    }
+}

@@ -1,0 +1,210 @@
+/* Base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+    padding: 15px;
+}
+
+.calculator-container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #ff77aa;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    text-align: center;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Calculator form */
+form[name="calculator"], .calculator {
+    background-color: #2e1b2b;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+}
+
+.display-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#display, .primary-display {
+    padding: clamp(10px, 4vw, 20px);
+    border: none;
+    border-radius: 10px;
+    background-color: #4d2957;
+    color: #ffefff;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#operator, .operator-display {
+    width: 100%;
+    padding: clamp(8px, 3vw, 15px);
+    border: none;
+    border-radius: 10px;
+    background-color: #ff77aa;
+    color: #1c1c1c;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    text-align: center;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    width: 100%;
+    padding: clamp(10px, 4vw, 20px);
+    border: none;
+    border-radius: 10px;
+    background-color: #8e3e88;
+    color: white;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    touch-action: manipulation; /* Improves touch interactions */
+}
+
+button:hover {
+    background-color: #ff77aa;
+}
+
+button:active {
+    background-color: #521b47;
+    transform: scale(0.95);
+}
+
+/* Button styles */
+.number-key {
+    background-color: #8e3e88;
+}
+
+.operation-key {
+    background-color: #a13e69;
+}
+
+.equals-key {
+    background-color: #ff77aa;
+    color: #1c1c1c;
+}
+
+/* Media Queries */
+@media screen and (max-width: 480px) {
+    .calculator {
+        padding: 15px;
+    }
+    
+    .keypad {
+        gap: 6px;
+    }
+    
+    button {
+        padding: 12px 5px;
+        font-size: 1.2rem;
+    }
+    
+    #display, .primary-display {
+        padding: 12px;
+        font-size: 1.5rem;
+    }
+    
+    #operator, .operator-display {
+        padding: 12px;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+    
+    .calculator {
+        padding: 10px;
+    }
+    
+    .keypad {
+        gap: 5px;
+    }
+    
+    button {
+        padding: 8px 5px;
+        font-size: 1rem;
+    }
+    
+    #display, .primary-display {
+        padding: 8px;
+        font-size: 1.2rem;
+    }
+    
+    #operator, .operator-display {
+        padding: 8px;
+        font-size: 1rem;
+    }
+}
+
+/* For extremely small screens */
+@media screen and (max-width: 320px) {
+    .calculator {
+        padding: 10px;
+    }
+    
+    .keypad {
+        gap: 4px;
+    }
+    
+    button {
+        padding: 8px 2px;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+    
+    #display, .primary-display,
+    #operator, .operator-display {
+        padding: 8px;
+        border-radius: 6px;
+    }
+}

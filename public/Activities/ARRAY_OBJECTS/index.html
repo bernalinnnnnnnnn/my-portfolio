@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Array</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <script>
+        let names = ["andrea", "cielo", "bernalyn", "toni"]; // global variable
+        let employees = [ //inside the curly braces are objects/ 1 object
+            {
+                "emp_id": "123",
+                "names": "Elon Musk",
+                "position": "CEO"
+            },
+            {
+                "emp_id": "143",
+                "names": "Bill Gates",
+                "position": "Supervisor"
+            }
+        ]
+    </script>
+    <script src="./JS/array.js" defer></script>
+    <script src="./JS/object.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <section class="lists-section">
+                <h2>Lists</h2>
+                <form id="lists-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" onclick="addName()">ADD</button>
+                        <button type="button" onclick="showAll()">SHOW ALL</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="employee-section">
+                <h2>Employee Information</h2>
+                <form id="employee-form">
+                    <div class="form-group">
+                        <label for="emp_id">Employee ID:</label>
+                        <input type="text" id="emp_id" name="emp_id">
+                    </div>
+                    <div class="form-group">
+                        <label for="names">Name:</label>
+                        <input type="text" id="names" name="emp_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position:</label>
+                        <input type="text" id="position" name="emp_position">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" onclick="addEmployee()">ADD EMPLOYEE</button>
+                        <button type="button" onclick="showEmployees()">SHOW EMPLOYEE</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        
+        <div class="list-container">
+            <div id="list-container">
+                <h2>Lists Display</h2>
+                <div id="list" class="list-display"></div>
+            </div>
+            <div id="employee-container">
+                <h2>Employee Table</h2>
+                <div class="table-responsive">
+                    <table id="employee">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Employee data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

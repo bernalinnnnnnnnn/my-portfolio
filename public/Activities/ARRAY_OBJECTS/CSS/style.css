@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 400px;
+    gap: 25px;
+}
+
+.list-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: calc(50% - 10px);
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Form Styles */
+#lists-form, #employee-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#lists-form label, #employee-form label {
+    font-size: 14px;
+    color: #ff99cc;
+}
+
+#lists-form input, #employee-form input, input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #ff99cc;
+    background-color: #2e2e2e;
+    color: #fff;
+    width: 100%;
+}
+
+#lists-form button, #employee-form button, button {
+    background-color: #ff99cc;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 14px;
+    flex: 1 1 auto;
+    min-width: 120px;
+}
+
+#lists-form button:hover, #employee-form button:hover, button:hover {
+    background-color: #d1668c;
+    transform: scale(1.02);
+}
+
+/* Headings */
+h2 {
+    color: #ff99cc;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+/* Containers */
+#list-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.list-display {
+    padding: 10px;
+}
+
+#employee-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    flex: 2;
+}
+
+/* Table styles */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    min-width: 400px;
+}
+
+thead {
+    background: linear-gradient(135deg, #ff99cc, #d1668c);
+    color: #1e1e1e;
+    font-weight: bold;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ff99cc;
+    text-align: center;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: rgba(255, 153, 204, 0.3);
+    transform: scale(1.01);
+}
+
+/* Sections */
+.lists-section, .employee-section {
+    width: 100%;
+}
+
+/* Media Queries */
+@media screen and (max-width: 992px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .form-container, .list-container {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    th, td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    .form-container, .list-container {
+        padding: 15px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        width: 100%;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    #lists-form input, #employee-form input, input, 
+    #lists-form button, #employee-form button, button {
+        padding: 10px;
+    }
+    
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+}
