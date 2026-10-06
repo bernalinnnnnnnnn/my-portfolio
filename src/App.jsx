@@ -17,6 +17,13 @@ const NAV = [
   ['contact', 'Contact']
 ];
 
+const CASE_FIELDS = [
+  ['role', 'My role'],
+  ['problem', 'Problem'],
+  ['built', 'What I built'],
+  ['result', 'Result']
+];
+
 const btnPrimary =
   'inline-flex items-center gap-2 rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300';
 const btnGhost =
@@ -89,19 +96,45 @@ const Lightbox = ({ items, index, setIndex }) => {
             onClick={(e) => { e.stopPropagation(); next(); }}><ChevronRight size={26} /></button>
         </>
       )}
-      <img src={cur.src} alt={cur.caption} onClick={(e) => e.stopPropagation()}
-        className="max-h-[78vh] max-w-full rounded-lg bg-white object-contain shadow-2xl md:max-w-4xl" />
-      <div className="mt-4 max-w-2xl text-center text-white" onClick={(e) => e.stopPropagation()}>
-        <p className="text-sm font-medium md:text-base">{cur.caption}</p>
-        <p className="mt-1 text-xs text-white/60 md:text-sm">
-          {cur.sub && `${cur.sub} | `}{index + 1} of {items.length}
-        </p>
-        {cur.link && (
-          <a href={cur.link} target="_blank" rel="noopener noreferrer"
-            className="mt-2 inline-block text-sm text-violet-300 underline hover:text-white">
-            Verify credential
-          </a>
-        )}
+      <div
+        className="flex max-h-[88vh] w-full max-w-5xl flex-col items-center gap-4 md:flex-row md:items-start md:justify-center md:gap-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex max-h-[80vh] w-full flex-col items-center gap-4 overflow-y-auto md:max-w-[62%]">
+          {cur.gallery ? (
+            // If the item has a gallery (Certificates section), show all images stacked
+            cur.gallery.map((g, i) => (
+              <div key={i} className="w-full">
+                <img src={asset(g.image)} alt={g.caption} className="w-full rounded-lg bg-white object-contain shadow-2xl" />
+                <p className="mt-2 text-center text-xs text-white/70">{g.type}: {g.caption}</p>
+              </div>
+            ))
+          ) : (
+            // Fallback for Projects section (single image)
+            <img src={cur.src} alt={cur.caption} className="max-h-[80vh] w-full rounded-lg bg-white object-contain shadow-2xl" />
+          )}
+        </div>
+        <div className="max-h-[30vh] w-full overflow-y-auto text-left text-white md:max-h-[80vh] md:w-80 md:shrink-0">
+          <p className="text-sm font-semibold md:text-base">{cur.caption}</p>
+          {cur.sub && <p className="mt-1 text-xs text-white/60 md:text-sm">{cur.sub}</p>}
+          <p className="mt-1 font-mono text-xs text-white/40">{index + 1} of {items.length}</p>
+          {cur.link && (
+            <a href={cur.link} target="_blank" rel="noopener noreferrer"
+              className="mt-2 inline-block text-sm text-violet-300 underline hover:text-white">
+              Verify credential
+            </a>
+          )}
+          {cur.skills && cur.skills.length > 0 && (
+            <div className="mt-4">
+              <p className="font-mono text-xs uppercase tracking-wider text-violet-300">
+                {cur.skillsLabel || 'Skills acquired'}
+              </p>
+              <ul className="mt-2 list-disc space-y-1.5 pl-4 text-xs leading-relaxed text-slate-300">
+                {cur.skills.map((s) => <li key={s}>{s}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -122,13 +155,19 @@ const useActiveSection = (ids) => {
   return active;
 };
 
-const Header = () => {
+const Header = ({ onWelcome }) => {
   const [open, setOpen] = useState(false);
   const active = useActiveSection(NAV.map(([id]) => id));
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
-        <a href="#top" className="font-semibold text-white">BB<span className="text-violet-400">.</span></a>
+        <a
+          href="#welcome"
+          onClick={(e) => { e.preventDefault(); onWelcome(); }}
+          className="text-sm font-semibold text-white md:text-base"
+        >
+          Bernalyn M. Benedicto<span className="text-violet-400">.</span>
+        </a>
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {NAV.map(([id, label]) => (
             <a key={id} href={`#${id}`}
@@ -233,6 +272,10 @@ const Hero = () => {
             </span>
             <p className="mt-5 text-lg text-violet-300 md:text-xl">{d.role} | {d.shortBio}</p>
             <p className="mt-1 font-mono text-sm text-slate-400">{d.tagline}</p>
+            {d.learning && d.learning.length > 0 && (
+              <p className="mt-1 text-sm text-slate-500">Currently strengthening: {d.learning.join(', ')}</p>
+            )}
+            {d.openTo && <p className="mt-1 text-sm text-slate-400">{d.openTo}</p>}
             <p className="mt-6 max-w-xl leading-relaxed text-slate-300">{d.summary}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#contact" className={btnPrimary}>Get in touch <ArrowUpRight size={16} /></a>
@@ -241,7 +284,7 @@ const Hero = () => {
             <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
               {d.facts.map((f) => (
                 <li key={f} className="flex items-center gap-2">
-                  <Award size={15} className="text-violet-400" /> {f}
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-400" /> {f}
                 </li>
               ))}
             </ul>
@@ -257,7 +300,7 @@ const Hero = () => {
 };
 
 const About = () => (
-  <Section id="about" eyebrow="01 / About" title="Skills and interests">
+  <Section id="about" eyebrow="01 / About" title="Skills and Interests">
     <div className="grid gap-6 md:grid-cols-3">
       {d.skills.map((s) => (
         <Card key={s.group}>
@@ -281,7 +324,7 @@ const About = () => (
 const Experience = () => {
   const edu = d.education;
   return (
-    <Section id="experience" eyebrow="02 / Experience" title="Work experience and education">
+    <Section id="experience" eyebrow="02 / Experience" title="Work Experience and Education">
       <ol className="relative ml-2 space-y-10 border-l border-white/10">
         {d.experience.map((job) => (
           <li key={job.role + job.period} className="relative pl-8">
@@ -337,11 +380,23 @@ const Projects = () => (
       {d.projects.map((p) => {
         const [role, techStr = ''] = p.meta.split(' | ');
         const tech = techStr.split(', ').filter(Boolean);
+        const rows = CASE_FIELDS.filter(([k]) => p[k]);
         return (
           <Card key={p.title} className="flex flex-col transition hover:border-violet-400/40">
             <p className="font-mono text-xs text-slate-500">{role}</p>
             <h3 className="mt-1 text-lg font-semibold text-white">{p.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-slate-300">{p.description}</p>
+            {rows.length ? (
+              <dl className="mt-3 space-y-3 text-sm">
+                {rows.map(([k, label]) => (
+                  <div key={k}>
+                    <dt className="font-mono text-xs uppercase tracking-wider text-slate-500">{label}</dt>
+                    <dd className="mt-0.5 leading-relaxed text-slate-300">{p[k]}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : (
+              <p className="mt-3 text-sm leading-relaxed text-slate-300">{p.description}</p>
+            )}
             {p.highlight && (
               <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-violet-300">
                 <Award size={15} /> {p.highlight}
@@ -359,22 +414,38 @@ const Projects = () => (
         );
       })}
     </div>
+
   </Section>
 );
 
 const Certificates = () => {
-  const all = d.achievements;
+  const all = d.certificates || [];
   const cats = ['All', ...Array.from(new Set(all.map((c) => c.category).filter(Boolean)))];
   const [filter, setFilter] = useState('All');
   const [idx, setIdx] = useState(null);
-  const shown = filter === 'All' ? all : all.filter((c) => c.category === filter);
-  const items = shown.map((c) => ({
-    src: asset(c.image), caption: c.caption, link: c.verifyUrl,
-    sub: [c.issuer, c.date].filter(Boolean).join(' | ')
+
+  const courses = filter === 'All' ? all : all.filter((c) => c.category === filter);
+
+  // Create ONE tile per course, using the coverImage for the card.
+  const tiles = courses.map((course) => ({
+    src: asset(course.coverImage || course.items[0].image),
+    caption: course.title,
+    title: course.title,
+    sub: [course.category, course.issuer, course.date].filter(Boolean).join(' | '),
+    meta: [course.issuer, course.date].filter(Boolean).join(' | '),
+    link: course.verifyUrl,
+    skills: course.skills,
+    skillsLabel: course.skillsLabel,
+    gallery: course.items // <-- This passes all the badges/certs to the popup
   }));
 
+  const total = all.reduce((n, c) => n + c.items.length, 0);
+
   return (
-    <Section id="certificates" eyebrow="04 / Certificates" title="Courses and trainings">
+    <Section id="certificates" eyebrow="04 / Certificates" title="Certificates">
+      <p className="-mt-6 mb-8 text-sm text-slate-400">
+        {total} Certificates and Badges. Click any image to view it in full.
+      </p>
       {cats.length > 2 && (
         <div className="mb-6 flex flex-wrap gap-2" role="tablist" aria-label="Certificate categories">
           {cats.map((c) => (
@@ -386,34 +457,49 @@ const Certificates = () => {
           ))}
         </div>
       )}
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map((c, i) => (
-          <button key={c.image} type="button" onClick={() => setIdx(i)}
-            aria-label={`Preview certificate: ${c.caption}`}
-            className="group overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] text-left transition hover:border-violet-400/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400">
-            <div className="relative aspect-[4/3] overflow-hidden bg-slate-900">
-              <img src={asset(c.image)} alt={c.caption} loading="lazy"
-                className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-105" />
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition group-hover:bg-slate-950/50">
-                <ZoomIn className="h-7 w-7 text-white opacity-0 transition group-hover:opacity-100" />
-              </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4">
+        {tiles.map((t, i) => (
+          <button key={t.src} type="button" onClick={() => setIdx(i)}
+            aria-label={`View certificate: ${t.title}`}
+            className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-slate-900 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400">
+            <img src={t.src} alt={t.caption} loading="lazy"
+              className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent p-3 pt-10">
+              <p className="line-clamp-2 text-xs font-medium leading-snug text-white md:text-sm">{t.title}</p>
+              {t.meta && <p className="mt-0.5 truncate text-[10px] text-slate-400 md:text-xs">{t.meta}</p>}
             </div>
-            <div className="p-4">
-              <p className="text-sm font-medium text-white">{c.caption}</p>
-              {(c.issuer || c.date) && (
-                <p className="mt-1 text-xs text-slate-400">{[c.issuer, c.date].filter(Boolean).join(' | ')}</p>
-              )}
+            <div className="pointer-events-none absolute right-2 top-2 rounded-full bg-slate-950/70 p-1.5 opacity-0 transition group-hover:opacity-100">
+              <ZoomIn className="h-4 w-4 text-white" />
             </div>
           </button>
         ))}
       </div>
-      <Lightbox items={items} index={idx} setIndex={setIdx} />
+      <Lightbox items={tiles.map((t) => ({ ...t, caption: t.title }))} index={idx} setIndex={setIdx} />
+    </Section>
+  );
+};
+
+const Testimonials = () => {
+  const list = d.testimonials || [];
+  if (!list.length) return null;
+  return (
+    <Section id="recommendations" eyebrow="05 / Recommendations" title="What others say">
+      <div className="grid gap-6 md:grid-cols-2">
+        {list.map((t) => (
+          <Card key={t.name}>
+            <blockquote className="text-sm leading-relaxed text-slate-300">&ldquo;{t.quote}&rdquo;</blockquote>
+            <p className="mt-4 text-sm font-medium text-white">{t.name}</p>
+            {t.title && <p className="text-xs text-slate-500">{t.title}</p>}
+          </Card>
+        ))}
+      </div>
     </Section>
   );
 };
 
 const Contact = () => (
-  <Section id="contact" eyebrow="05 / Contact" title="Let's work together">
+  <Section id="contact" eyebrow={`0${(d.testimonials || []).length ? 6 : 5} / Contact`} title="Let's work together">
     <div className="grid gap-8 md:grid-cols-2">
       <div>
         <p className="max-w-md leading-relaxed text-slate-300">
@@ -458,19 +544,27 @@ export default function App() {
     setEntered(true);
   };
 
+  const goWelcome = () => {
+    // Clear any #section in the address bar so a refresh doesn't skip the welcome page
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+    setEntered(false);
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-slate-200 selection:bg-violet-500/30">
       {!entered ? (
         <Welcome onEnter={enter} />
       ) : (
         <>
-          <Header />
+          <Header onWelcome={goWelcome} />
           <main>
             <Hero />
             <About />
             <Experience />
             <Projects />
             <Certificates />
+            <Testimonials />
             <Contact />
           </main>
           <footer className="border-t border-white/5 py-8 text-center text-xs text-slate-500">
