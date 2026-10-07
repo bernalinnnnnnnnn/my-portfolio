@@ -1,21 +1,37 @@
 import { useState, useEffect } from 'react';
 import {
   Menu, X, Mail, Phone, MapPin, Download, ArrowUpRight, Award,
-  GraduationCap, Briefcase, ChevronLeft, ChevronRight, ZoomIn
+  GraduationCap, Briefcase, ChevronLeft, ChevronRight, ZoomIn,
+  BookOpen, Palette, Gamepad2, Coffee, Monitor, Laptop, Sparkles,
+  Wallet, Share2, Clapperboard, Keyboard, Globe, Server
 } from 'lucide-react';
+import { LOGOS } from './skillLogos.js';
 import { portfolioData as d } from './data.js';
 
 // Makes local paths work on any host (root domain or GitHub Pages subpath).
 const asset = (p) =>
   /^(https?:|mailto:|tel:)/.test(p) ? p : `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}`;
 
+const hasPrograms = (d.programs || []).length > 0;
+const hasTestimonials = (d.testimonials || []).length > 0;
+
 const NAV = [
   ['about', 'About'],
   ['experience', 'Experience'],
   ['projects', 'Projects'],
+  ...(hasPrograms ? [['programs', 'Programs']] : []),
   ['certificates', 'Certificates'],
   ['contact', 'Contact']
 ];
+
+// Section numbers adjust automatically when optional sections are empty.
+const NUM = {
+  programs: 4,
+  certificates: hasPrograms ? 5 : 4,
+  recommendations: hasPrograms ? 6 : 5,
+  contact: 5 + (hasPrograms ? 1 : 0) + (hasTestimonials ? 1 : 0)
+};
+const num = (n) => String(n).padStart(2, '0');
 
 const CASE_FIELDS = [
   ['role', 'My role'],
@@ -28,6 +44,73 @@ const btnPrimary =
   'inline-flex items-center gap-2 rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300';
 const btnGhost =
   'inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300';
+
+/* ---------- Skill logos ---------- */
+// Key = skill name in data.js (lowercase, text in brackets ignored). Value = [icon, color].
+// A skill with no entry here still shows, with a letter badge instead of a logo.
+// Brand logos are stored in skillLogos.js and drawn as inline SVG.
+const brand = (key) => {
+  const { d: path, color } = LOGOS[key];
+  const Logo = ({ size = 28 }) => (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill={color} aria-hidden="true"><path d={path} /></svg>
+  );
+  return [Logo, color];
+};
+
+const SKILL_ICONS = {
+  'php': brand('php'),
+  'javascript': brand('javascript'),
+  'html5': brand('html5'),
+  'css': brand('css'),
+  'python': brand('python'),
+  'react': brand('react'),
+  'vite': brand('vite'),
+  'node.js': brand('node.js'),
+  'express.js': brand('express.js'),
+  'mysql': brand('mysql'),
+  'postgresql': brand('postgresql'),
+  'vercel': brand('vercel'),
+  'render': brand('render'),
+  'infinityfree': [Server, '#A78BFA'],
+  'git': brand('git'),
+  'github': brand('github'),
+  'figma': brand('figma'),
+  'canva': brand('canva'),
+  'kuula': [Globe, '#A78BFA'],
+  'finance assistant': [Wallet, '#C4B5FD'],
+  'social media management': [Share2, '#C4B5FD'],
+  'video and image editing': [Clapperboard, '#C4B5FD'],
+  'data entry': [Keyboard, '#C4B5FD']
+};
+const skillKey = (name) => name.toLowerCase().replace(/\s*\(.*\)/, '').trim();
+
+const SkillTile = ({ name }) => {
+  const [Icon, color] = SKILL_ICONS[skillKey(name)] || [null, null];
+  return (
+    <span title={name}
+      className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300 transition hover:border-violet-400/40 hover:bg-white/[0.06]">
+      {Icon ? (
+        <Icon size={16} color={color} aria-hidden="true" />
+      ) : (
+        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-violet-500/20 text-[10px] font-semibold text-violet-300">
+          {name.charAt(0)}
+        </span>
+      )}
+      {name}
+    </span>
+  );
+};
+
+const hobbyIcon = (title) => {
+  const t = title.toLowerCase();
+  if (t.includes('read')) return BookOpen;
+  if (t.includes('draw') || t.includes('paint')) return Palette;
+  if (t.includes('game')) return Gamepad2;
+  if (t.includes('cafe') || t.includes('coffee')) return Coffee;
+  if (t.includes('video') || t.includes('design') || t.includes('tech')) return Monitor;
+  if (t.includes('learn')) return Laptop;
+  return Sparkles;
+};
 
 /* ---------- Shared pieces ---------- */
 
@@ -100,18 +183,18 @@ const Lightbox = ({ items, index, setIndex }) => {
         className="flex max-h-[88vh] w-full max-w-5xl flex-col items-center gap-4 md:flex-row md:items-start md:justify-center md:gap-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex max-h-[80vh] w-full flex-col items-center gap-4 overflow-y-auto md:max-w-[62%]">
+        <div className="flex max-h-[52vh] w-full flex-col items-center gap-4 overflow-y-auto md:max-h-[80vh] md:max-w-[62%]">
           {cur.gallery ? (
-            // If the item has a gallery (Certificates section), show all images stacked
-            cur.gallery.map((g, i) => (
-              <div key={i} className="w-full">
+            // Certificates: show every certificate and badge of the course, stacked
+            cur.gallery.map((g) => (
+              <div key={g.image} className="w-full">
                 <img src={asset(g.image)} alt={g.caption} className="w-full rounded-lg bg-white object-contain shadow-2xl" />
                 <p className="mt-2 text-center text-xs text-white/70">{g.type}: {g.caption}</p>
               </div>
             ))
           ) : (
-            // Fallback for Projects section (single image)
-            <img src={cur.src} alt={cur.caption} className="max-h-[80vh] w-full rounded-lg bg-white object-contain shadow-2xl" />
+            // Project screenshots: a single image
+            <img src={cur.src} alt={cur.caption} className="w-full rounded-lg bg-white object-contain shadow-2xl" />
           )}
         </div>
         <div className="max-h-[30vh] w-full overflow-y-auto text-left text-white md:max-h-[80vh] md:w-80 md:shrink-0">
@@ -301,22 +384,32 @@ const Hero = () => {
 
 const About = () => (
   <Section id="about" eyebrow="01 / About" title="Skills and Interests">
-    <div className="grid gap-6 md:grid-cols-3">
+    <div className="divide-y divide-white/10 rounded-xl border border-white/10 bg-white/[0.03]">
       {d.skills.map((s) => (
-        <Card key={s.group}>
-          <h3 className="mb-4 text-sm font-semibold text-white">{s.group}</h3>
-          <div className="flex flex-wrap gap-2">{s.items.map((i) => <Chip key={i}>{i}</Chip>)}</div>
-        </Card>
-      ))}
-    </div>
-    <h3 className="mb-4 mt-12 text-sm font-semibold uppercase tracking-widest text-slate-400">Outside of code</h3>
-    <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
-      {d.hobbies.map((h) => (
-        <div key={h.title}>
-          <p className="text-sm font-medium text-white">{h.title}</p>
-          <p className="mt-1 text-sm text-slate-400">{h.text}</p>
+        <div key={s.group} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:gap-6">
+          <h3 className="shrink-0 text-xs font-semibold uppercase tracking-widest text-slate-400 sm:w-40 sm:pt-2">{s.group}</h3>
+          <div className="flex flex-wrap gap-2">
+            {s.items.map((i) => <SkillTile key={i} name={i} />)}
+          </div>
         </div>
       ))}
+    </div>
+    <h3 className="mb-4 mt-10 text-sm font-semibold uppercase tracking-widest text-slate-400">Outside of code</h3>
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {d.hobbies.map((h) => {
+        const Icon = hobbyIcon(h.title);
+        return (
+          <div key={h.title} className="flex gap-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-500/10 text-violet-300">
+              <Icon size={16} aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-sm font-medium text-white">{h.title}</p>
+              <p className="mt-1 text-sm text-slate-400">{h.text}</p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   </Section>
 );
@@ -418,6 +511,40 @@ const Projects = () => (
   </Section>
 );
 
+/* const Programs = () => {
+  const list = d.programs || [];
+  if (!list.length) return null;
+  return (
+    <Section id="programs" eyebrow={`${num(NUM.programs)} / Programs`} title="Programs and Activities">
+      <div className="grid gap-6 md:grid-cols-2">
+        {list.map((p) => {
+          const sub = [p.role, p.organizer].filter(Boolean).join(' | ');
+          return (
+            <Card key={p.title + (p.date || '')} className="flex flex-col transition hover:border-violet-400/40">
+              {p.date && <p className="font-mono text-xs text-slate-500">{p.date}</p>}
+              <h3 className="mt-1 text-lg font-semibold text-white">{p.title}</h3>
+              {sub && <p className="text-sm text-violet-300">{sub}</p>}
+              {p.description && <p className="mt-3 text-sm leading-relaxed text-slate-300">{p.description}</p>}
+              {p.highlights && p.highlights.length > 0 && (
+                <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-300">
+                  {p.highlights.map((h) => <li key={h}>{h}</li>)}
+                </ul>
+              )}
+              <ProjectShots images={p.images} title={p.title} />
+              {p.link && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center gap-1 self-start text-sm font-medium text-violet-300 hover:text-white">
+                  Learn more <ArrowUpRight size={15} />
+                </a>
+              )}
+            </Card>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}; */
+
 const Certificates = () => {
   const all = d.certificates || [];
   const cats = ['All', ...Array.from(new Set(all.map((c) => c.category).filter(Boolean)))];
@@ -426,23 +553,23 @@ const Certificates = () => {
 
   const courses = filter === 'All' ? all : all.filter((c) => c.category === filter);
 
-  // Create ONE tile per course, using the coverImage for the card.
+  // One tile per course. coverImage is the tile photo; every item opens in the preview.
   const tiles = courses.map((course) => ({
     src: asset(course.coverImage || course.items[0].image),
     caption: course.title,
     title: course.title,
-    sub: [course.category, course.issuer, course.date].filter(Boolean).join(' | '),
-    meta: [course.issuer, course.date].filter(Boolean).join(' | '),
+    sub: Array.from(new Set([course.category, course.issuer, course.date].filter(Boolean))).join(' | '),
+    meta: [course.issuer || course.category, course.date].filter(Boolean).join(' | '),
     link: course.verifyUrl,
     skills: course.skills,
     skillsLabel: course.skillsLabel,
-    gallery: course.items // <-- This passes all the badges/certs to the popup
+    gallery: course.items
   }));
 
   const total = all.reduce((n, c) => n + c.items.length, 0);
 
   return (
-    <Section id="certificates" eyebrow="04 / Certificates" title="Certificates">
+    <Section id="certificates" eyebrow={`${num(NUM.certificates)} / Certificates`} title="Certificates">
       <p className="-mt-6 mb-8 text-sm text-slate-400">
         {total} Certificates and Badges. Click any image to view it in full.
       </p>
@@ -460,7 +587,7 @@ const Certificates = () => {
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4">
         {tiles.map((t, i) => (
-          <button key={t.src} type="button" onClick={() => setIdx(i)}
+          <button key={t.title} type="button" onClick={() => setIdx(i)}
             aria-label={`View certificate: ${t.title}`}
             className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-slate-900 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400">
             <img src={t.src} alt={t.caption} loading="lazy"
@@ -475,7 +602,7 @@ const Certificates = () => {
           </button>
         ))}
       </div>
-      <Lightbox items={tiles.map((t) => ({ ...t, caption: t.title }))} index={idx} setIndex={setIdx} />
+      <Lightbox items={tiles} index={idx} setIndex={setIdx} />
     </Section>
   );
 };
@@ -484,7 +611,7 @@ const Testimonials = () => {
   const list = d.testimonials || [];
   if (!list.length) return null;
   return (
-    <Section id="recommendations" eyebrow="05 / Recommendations" title="What others say">
+    <Section id="recommendations" eyebrow={`${num(NUM.recommendations)} / Recommendations`} title="What others say">
       <div className="grid gap-6 md:grid-cols-2">
         {list.map((t) => (
           <Card key={t.name}>
@@ -499,7 +626,7 @@ const Testimonials = () => {
 };
 
 const Contact = () => (
-  <Section id="contact" eyebrow={`0${(d.testimonials || []).length ? 6 : 5} / Contact`} title="Let's work together">
+  <Section id="contact" eyebrow={`${num(NUM.contact)} / Contact`} title="Let's work together">
     <div className="grid gap-8 md:grid-cols-2">
       <div>
         <p className="max-w-md leading-relaxed text-slate-300">
@@ -563,6 +690,7 @@ export default function App() {
             <About />
             <Experience />
             <Projects />
+            {/* <Programs /> */}
             <Certificates />
             <Testimonials />
             <Contact />

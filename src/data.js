@@ -4,7 +4,7 @@ export const portfolioData = {
     role: "Junior Web Developer",
     shortBio: "Fresh IT Graduate",
     tagline: "PHP | JavaScript | React | Management Systems",
-    // Export your resume as PDF and save it at public/Bernalyn_Benedicto_Resume.pdf
+    // Export your resume as PDF and save it at public/BenedictoBernalyn_resume.pdf
     resumeUrl: "/BenedictoBernalyn_resume.pdf",
     summary:
         "Fresh Information Technology graduate with foundational experience in web development, cashiering, and social media content. I developed a management system during my internship and have completed small freelance projects. I'm eager to learn, take guidance, and grow in an entry-level Junior Web Developer position.",
@@ -64,10 +64,10 @@ export const portfolioData = {
     },
 
     skills: [
-        { group: "Web Development", items: ["PHP", "JavaScript", "HTML5", "CSS", "Python", "React + Vite", "Node.js & Express.js"] },
+        { group: "Web Development", items: ["PHP", "JavaScript", "HTML5", "CSS", "Python", "React", "Vite", "Node.js", "Express.js"] },
         { group: "Databases", items: ["MySQL", "PostgreSQL"] },
         { group: "Deployment", items: ["Vercel", "Render", "InfinityFree"] },
-        { group: "Tools", items: ["Git", "GitHub", "Figma", "Canva", "Kuula (360° virtual tours)"] },
+        { group: "Tools", items: ["Git", "GitHub", "Figma", "Canva", "Kuula"] },
         { group: "Other", items: ["Finance Assistant", "Social Media Management", "Video and Image Editing", "Data Entry"] }
     ],
 
@@ -95,122 +95,99 @@ export const portfolioData = {
         }
     ],
 
-    // Certificates. Images live in /public/Achievements/ (file names are case-sensitive).
-    // Each entry is one course or webinar. Add more items per course if you have separate badge images.
-    // Optional: verifyUrl (link to the online credential), skillsLabel.
-    /* certificates: [
+    // Programs, trainings, competitions and activities you joined. The section is hidden when this list is empty.
+    // Fields (all optional except title): role, organizer, date, description, highlights, images, link.
+    // Example: { title: "...", role: "Participant", organizer: "...", date: "March 2025",
+    //            description: "...", highlights: ["...", "..."],
+    //            images: [{ src: "/Programs/robotics-1.jpg", caption: "..." }], link: "https://..." }
+    /* programs: [
+        {
+            title: "Robotics",
+            role: "Participant",
+            // organizer: "",   // who ran it, e.g. your school or organization
+            // date: "",        // e.g. "March 2025"
+            // description: "", // 1-2 sentences: what the program was and what you did
+            images: []
+        }
+    ], */
+
+    // Certificates, newest first. Images live in /public/Achievements/ (file names are case-sensitive).
+    // coverImage = the tile photo. items = everything shown in the preview (certificates and badges).
+    // category = filter tab. Optional: issuer, verifyUrl (link to the online credential), skillsLabel.
+    certificates: [
         {
             title: "IT Internship",
             issuer: "Philstar Autoworks",
             date: "January – March 2026",
             category: "Internship",
+            coverImage: "/Achievements/intern.jpg",
             items: [
-                { type: "Certificate", caption: "IT Internship Certificate", image: "/Achievements/intern.jpg" }
+                { type: "Certificate of Completion", caption: "Internship at Philstar Autoworks", image: "/Achievements/intern.jpg" }
+            ],
+            skillsLabel: "What I worked on",
+            skills: [
+                "Developed a management system using PHP, JavaScript, HTML5, and CSS",
+                "Organized customer bookings, parts inventory, and income records in one system",
+                "Helped replace manual record-keeping with digital tracking of daily income and stock",
+                "Earned the Outstanding IT Intern award for performance and project contribution"
             ]
         },
         {
-            title: "Apply AI: Update Your Resume",
-            issuer: "Cisco Networking Academy",
-            date: "January 10, 2026",
-            category: "AI",
+            title: "Data Analytics Essentials",
+            date: "February 23, 2026",
+            category: "Cisco Networking Academy",
+            coverImage: "/Achievements/data-analytics.png",
             items: [
-                { type: "Certificate", caption: "Apply AI: Update Your Resume", image: "/Achievements/ai_resume.png" }
+                { type: "Certificate of Completion", caption: "Data Analytics Essentials", image: "/Achievements/data-analytics.png" },
+                { type: "Badge", caption: "Data Analytics Essentials Badge", image: "/Achievements/data-analytics-badge.png" }
             ],
             skills: [
-                "Identify and redact private information in resumes before using public AI tools",
-                "Select appropriate AI tools and workflows balancing privacy, accuracy, and speed",
-                "Extract project accomplishments and metadata from source documents",
-                "Synthesize concise, evidence-based bullet points for resumes",
-                "Conduct LLM self-checks and human validation to ensure factual accuracy",
-                "Compile and categorize skills into ATS-friendly formats",
-                "Apply styling using word processor or HTML templates to produce PDFs",
-                "Customize resumes line-by-line to match specific job requirements"
+                "Understand the role of data analytics in business and decision-making",
+                "Collect, clean, and prepare data for analysis",
+                "Apply basic statistical methods to interpret data",
+                "Create visualizations to communicate insights effectively",
+                "Use tools like Excel and spreadsheets for data analysis tasks",
+                "Explore introductory concepts of data storytelling and reporting"
             ]
         },
         {
-            title: "Apply AI: Analyze Customer Reviews",
-            issuer: "Cisco Networking Academy",
-            date: "January 10, 2026",
-            category: "AI",
-            items: [
-                { type: "Certificate", caption: "Apply AI: Analyze Customer Reviews", image: "/Achievements/ai_analyze.png" }
-            ],
+            title: "Data Privacy, FOI, and AI Safety",
+            issuer: "DICT – Region V (Catanduanes Provincial Office)",
+            date: "February 3, 2026",
+            category: "Webinars",
+            coverImage: "/Achievements/data_privacy.png",
+            items: [{ type: "Certificate", caption: "Certificate of Attendance", image: "/Achievements/data_privacy.png" }],
+            skillsLabel: "Skills and knowledge gained",
             skills: [
-                "Choose the right AI or non-AI tool for each task",
-                "Process tabular data with LLMs and spreadsheet apps",
-                "Format tabular data for transfer between chatbot and spreadsheet",
-                "Prompt chatbots to write and run code for data processing",
-                "Write complex spreadsheet formulas with AI assistance",
-                "Include the \"human in the loop\" for final decisions"
+                "Understand the fundamentals of data privacy and the Data Privacy Act",
+                "Learn the principles of Freedom of Information (FOI) and how to access public records",
+                "Identify risks and best practices related to AI safety and ethical use of AI",
+                "Apply safe online behaviors to protect personal and sensitive information",
+                "Recognize government initiatives promoting digital rights and responsible AI"
             ]
         },
         {
-            title: "AI Fundamentals with IBM SkillsBuild",
-            issuer: "Cisco Networking Academy & IBM SkillsBuild",
-            date: "January 9, 2026",
-            category: "AI",
-            items: [
-                { type: "Certificate", caption: "AI Fundamentals with IBM SkillsBuild", image: "/Achievements/ai_fundamentals.png" }
-            ],
+            title: "Digital Safety",
+            issuer: "DICT – Cordillera Administrative Region",
+            date: "January 28, 2026",
+            category: "Webinars",
+            coverImage: "/Achievements/digital_safety.png",
+            items: [{ type: "Certificate of Participation", caption: "Digital Safety", image: "/Achievements/digital_safety.png" }],
+            skillsLabel: "Skills and knowledge gained",
             skills: [
-                "Understanding of AI concepts, machine learning, and neural networks",
-                "Knowledge of IBM's AI tools and platforms",
-                "Ethical considerations in AI development",
-                "Real-world applications of artificial intelligence",
-                "Data preparation and preprocessing for AI models",
-                "AI model evaluation and deployment strategies"
-            ]
-        },
-        // Earlier certificates. Add issuer, date and skills when you have them.
-        { title: "Introduction to Modern AI", category: "AI", items: [{ type: "Certificate", caption: "Online Course: Introduction to Modern AI", image: "/Achievements/ai.png" }] },
-        { title: "JavaScript Essentials 1", category: "Web", items: [{ type: "Certificate", caption: "Online Course: JavaScript Essentials 1", image: "/Achievements/js.png" }] },
-        { title: "Introduction to Data Science", category: "Data", items: [{ type: "Certificate", caption: "Online Course: Introduction to Data Science", image: "/Achievements/datascience.png" }] },
-        { title: "Webinar: Data Analytics for Smarter Decision-Making", category: "Data", items: [{ type: "Certificate", caption: "Webinar: Data Analytics for Smarter Decision-Making", image: "/Achievements/dict.png" }] },
-
-        // Not shown yet because the image files weren't in your folder. To add one back, copy the
-        // image into public/Achievements/, then copy the entry below into the list above.
-        {
-            title: "Data Analytics Essentials", issuer: "Cisco Networking Academy", date: "February 23, 2026", category: "Data",
-            items: [{ type: "Certificate", caption: "Certificate of Course Completion", image: "/Achievements/data-analytics-essentials.png" }]
-        },
-        {
-            title: "DICT Webinar: Data Privacy, FOI, and AI Safety", issuer: "DICT – Region V (Catanduanes Provincial Office)", date: "February 3, 2026", category: "Digital Safety",
-            items: [{ type: "Certificate", caption: "Certificate of Attendance", image: "/Achievements/data_privacy.png" }]
-        },
-        {
-            title: "DICT Webinar: Digital Safety", issuer: "DICT – Cordillera Administrative Region", date: "January 28, 2026", category: "Digital Safety",
-            items: [{ type: "Certificate", caption: "Certificate of Participation", image: "/Achievements/digital_safety.png" }]
-        }
-    ], */
-
-    // Certificates. Images live in /public/Achievements/ (file names are case-sensitive).
-    // Each entry is one course or webinar. Add more items per course if you have separate badge images.
-    // Optional: verifyUrl (link to the online credential), skillsLabel.
-    // Certificates. Images live in /public/Achievements/ (file names are case-sensitive).
-    // Each entry is one course or webinar. Add more items per course if you have separate badge images.
-    // Optional: verifyUrl (link to the online credential), skillsLabel.
-    certificates: [
-        {
-            title: "IT Internship",
-            date: "January – March 2026",
-            category: "Internship",
-            coverImage: "/Achievements/intern.jpg", // Main preview for the card
-            items: [
-                { type: "Certificate of Completion", caption: "Internship At Philstar Autoworks", image: "/Achievements/intern.jpg" }
-            ],
-            skills: [
-                "Provided technical support and troubleshooting for hardware and software issues",
-                "Assisted in system maintenance, updates, and network configuration",
-                "Documented technical procedures and assisted with IT inventory management",
-                "Collaborated with the IT team to resolve daily operational challenges"
+                "Recognize common cyber threats and apply basic digital safety practices",
+                "Understand the role of the Philippine National Public Key Infrastructure (PNPKI)",
+                "Apply safe online behaviors to protect personal and sensitive information",
+                "Identify risks related to digital identity, privacy, and data misuse",
+                "Understand government-led initiatives promoting cybersecurity awareness"
             ]
         },
         {
             title: "Apply AI: Update Your Resume",
             date: "January 10, 2026",
             category: "Cisco Networking Academy",
-            coverImage: "/Achievements/ai_resume.png", // Main preview for the card
-            items: [ // All images for the popup gallery
+            coverImage: "/Achievements/ai_resume.png",
+            items: [
                 { type: "Certificate of Completion", caption: "Apply AI: Update Your Resume Certificate", image: "/Achievements/ai_resume.png" },
                 { type: "Certificate of Course Completion", caption: "Apply AI: Update Your Resume", image: "/Achievements/certificate-of-completion-resume.png" },
                 { type: "Badge", caption: "Cisco Networking Academy Badge", image: "/Achievements/ai-resume-badge.png" }
@@ -230,7 +207,7 @@ export const portfolioData = {
             title: "Apply AI: Analyze Customer Reviews",
             date: "January 10, 2026",
             category: "Cisco Networking Academy",
-            coverImage: "/Achievements/ai_analyze.png", // Main preview for the card
+            coverImage: "/Achievements/ai_analyze.png",
             items: [
                 { type: "Certificate of Completion", caption: "Apply AI: Analyze Customer Reviews Certificate", image: "/Achievements/Certificate of Course Completion-customer-review.png" },
                 { type: "Certificate of Course Completion", caption: "Apply AI: Analyze Customer Reviews", image: "/Achievements/ai_analyze.png" },
@@ -247,14 +224,15 @@ export const portfolioData = {
         },
         {
             title: "AI Fundamentals with IBM SkillsBuild",
+            issuer: "Cisco Networking Academy & IBM SkillsBuild",
             date: "January 9, 2026",
             category: "Cisco Networking Academy",
-            coverImage: "/Achievements/ai_fundamentals.png", // Main preview for the card
+            coverImage: "/Achievements/ai_fundamentals.png",
             items: [
                 { type: "Certificate of Completion", caption: "AI Fundamentals with IBM SkillsBuild", image: "/Achievements/ai_fundamentals.png" },
                 { type: "Certificate of Completion", caption: "Artificial Intelligence Fundamentals", image: "/Achievements/artificial-intelligence-badge2.png" },
                 { type: "Badge", caption: "Artificial Intelligence Fundamentals Badge", image: "/Achievements/artificial-intelligence-badge.png" },
-                { type: "Badge", caption: "AI Fundamentals IBM SkillsBuild Badge", image: "/Achievements/ai-fundamentals-badge.png" },
+                { type: "Badge", caption: "AI Fundamentals IBM SkillsBuild Badge", image: "/Achievements/ai-fundamentals-badge.png" }
             ],
             skills: [
                 "Understanding of AI concepts, machine learning, and neural networks",
@@ -263,20 +241,6 @@ export const portfolioData = {
                 "Real-world applications of artificial intelligence",
                 "Data preparation and preprocessing for AI models",
                 "AI model evaluation and deployment strategies"
-            ]
-        },
-        // Earlier certificates. 
-        {
-            title: "Introduction to Modern AI",
-            date: "February 1, 2025",
-            category: "Cisco Networking Academy",
-            coverImage: "/Achievements/ai.png",
-            items: [{ type: "Certificate of Completion", caption: "Introduction to Modern AI", image: "/Achievements/ai.png" }],
-            skills: [
-                "Understand basic AI concepts, terminology, and historical context",
-                "Identify real-world applications and limitations of AI technologies",
-                "Recognize the ethical implications and societal impacts of AI",
-                "Explore how AI models are trained and how they make decisions"
             ]
         },
         {
@@ -309,7 +273,7 @@ export const portfolioData = {
         },
         {
             title: "Data Analytics for Smarter Decision-Making",
-            date: "February 02, 2025",
+            date: "February 2, 2025",
             category: "Webinars",
             coverImage: "/Achievements/dict.png",
             items: [{ type: "Certificate of Participation", caption: "Data Analytics for Smarter Decision-Making", image: "/Achievements/dict.png" }],
@@ -321,50 +285,16 @@ export const portfolioData = {
             ]
         },
         {
-            title: "Data Analytics Essentials",
-            date: "February 23, 2026",
+            title: "Introduction to Modern AI",
+            date: "February 1, 2025",
             category: "Cisco Networking Academy",
-            coverImage: "/Achievements/data-analytics.png", // Main preview for the card
-            items: [
-                { type: "Certificate of Completion", caption: "Data Analytics Essentials", image: "/Achievements/data-analytics.png" },
-                { type: "Badge", caption: "Data Analytics Essentials Badge", image: "/Achievements/data-analytics-badge.png" }
-
-            ],
+            coverImage: "/Achievements/ai.png",
+            items: [{ type: "Certificate of Completion", caption: "Introduction to Modern AI", image: "/Achievements/ai.png" }],
             skills: [
-                "Understand the role of data analytics in business and decision-making",
-                "Collect, clean, and prepare data for analysis",
-                "Apply basic statistical methods to interpret data",
-                "Create visualizations to communicate insights effectively",
-                "Use tools like Excel and spreadsheets for data analysis tasks",
-                "Explore introductory concepts of data storytelling and reporting"
-            ]
-        },
-        {
-            title: "Data Privacy, FOI, and AI Safety",
-            date: "February 3, 2026",
-            category: "Webinars",
-            coverImage: "/Achievements/data_privacy.png",
-            items: [{ type: "Certificate", caption: "Certificate of Attendance", image: "/Achievements/data_privacy.png" }],
-            skills: [
-                "Understand the fundamentals of data privacy and the Data Privacy Act",
-                "Learn the principles of Freedom of Information (FOI) and how to access public records",
-                "Identify risks and best practices related to AI safety and ethical use of AI",
-                "Apply safe online behaviors to protect personal and sensitive information",
-                "Recognize government initiatives promoting digital rights and responsible AI"
-            ]
-        },
-        {
-            title: "Digital Safety",
-            date: "January 28, 2026",
-            category: "Webinars",
-            coverImage: "/Achievements/digital_safety.png",
-            items: [{ type: "Certificate of Participation", caption: "Digital Safety", image: "/Achievements/digital_safety.png" }],
-            skills: [
-                "Recognize common cyber threats and apply basic digital safety practices",
-                "Understand the role of the Philippine National Public Key Infrastructure (PNPKI)",
-                "Apply safe online behaviors to protect personal and sensitive information",
-                "Identify risks related to digital identity, privacy, and data misuse",
-                "Understand government-led initiatives promoting cybersecurity awareness"
+                "Understand basic AI concepts, terminology, and historical context",
+                "Identify real-world applications and limitations of AI technologies",
+                "Recognize the ethical implications and societal impacts of AI",
+                "Explore how AI models are trained and how they make decisions"
             ]
         }
     ],
